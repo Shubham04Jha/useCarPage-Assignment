@@ -1,0 +1,378 @@
+/* Page Layout and Container */
+.used-cars-page-layout {
+  max-width: 992px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.page-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 1.5rem;
+}
+
+.page-title__sub {
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.used-cars-page-inner-layout {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start; /* Crucial for position: sticky to function */
+}
+
+/* Sidebar styling (Sticky & Scrollable) */
+.sidebar {
+  flex: 0 0 300px;
+  width: 300px;
+  position: sticky;
+  top: 1.5rem;
+  max-height: calc(100vh - 3rem);
+  overflow-y: auto;
+  
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  scrollbar-width: thin;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-light);
+  padding-bottom: 0.75rem;
+}
+
+.sidebar-header__title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.sidebar-header__clear-btn {
+  border: none;
+  background: transparent;
+  color: var(--primary-color);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: underline;
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.sidebar-header__clear-btn:hover {
+  color: var(--primary-hover);
+}
+
+/* Styled Scrollbar for Sidebar */
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 3px;
+}
+
+/* Collapsible Filter Section Wrapper */
+.filter-section {
+  border-bottom: 1px solid var(--border-light);
+  padding: 1rem 0;
+}
+
+.filter-section:last-child {
+  border-bottom: none;
+}
+
+.collapsible-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.25rem 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--text-main);
+}
+
+.collapsible-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+/* Drawer indicator animations */
+.collapsible-header__arrow {
+  color: var(--text-muted);
+  transition: transform 0.2s ease-in-out;
+}
+
+.collapsible-header__arrow.is-open {
+  transform: rotate(180deg);
+}
+
+/* Fuel checkbox sidebar styles */
+.sidebar input[type="checkbox"] {
+  accent-color: var(--primary-color);
+  width: 1.05rem;
+  height: 1.05rem;
+  cursor: pointer;
+}
+
+.sidebar-option-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--text-main);
+  transition: color 0.15s ease;
+  padding: 0.1rem 0;
+}
+
+.sidebar-option-label:hover {
+  color: var(--primary-color);
+}
+
+/* Listing section layout */
+.listing-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  min-width: 0;
+}
+
+/* Listing Toolbar styles */
+.listing-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* Applied Filter Pills */
+.applied-filters-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  min-width: 0;
+  flex: 1;
+}
+
+.applied-filter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: #f3f4f6;
+  border: 1px solid var(--border-light);
+  color: var(--text-main);
+  border-radius: 9999px;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.applied-filter-pill__close {
+  appearance: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 0 0 0 0.15rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s ease;
+}
+
+.applied-filter-pill__close:hover {
+  color: var(--primary-color);
+}
+
+/* Sort Dropdown styles */
+.sort-dropdown-container {
+  min-width: 200px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.sort-dropdown-select {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-dark);
+  background: var(--bg-card);
+  color: var(--text-main);
+  font-size: 0.9rem;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sort-dropdown-select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(229, 57, 53, 0.12);
+}
+
+/* Budget Input boxes styles */
+.budget-input-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.budget-input {
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--border-dark);
+  border-radius: 0.5rem;
+  outline: none;
+  font-size: 0.875rem;
+  text-align: center;
+  background-color: var(--bg-card);
+  color: var(--text-main);
+  transition: all 0.2s ease;
+  appearance: textfield; /* removes spinner buttons for clean look */
+}
+
+.budget-input::-webkit-outer-spin-button,
+.budget-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.budget-input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(229, 57, 53, 0.12);
+}
+
+/* Cars Grid and Cell styles */
+.cars-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.cars-grid__empty {
+  padding: 4rem 2rem;
+  border: 1px dashed var(--border-dark);
+  border-radius: 0.75rem;
+  text-align: center;
+  color: var(--text-muted);
+  background: var(--bg-card);
+  font-size: 1rem;
+}
+
+.car-grid-cell {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.car-grid-cell:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.car-grid-cell__content {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  flex-grow: 1;
+}
+
+.car-grid-cell__title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-main);
+  line-height: 1.4;
+}
+
+.car-grid-cell__meta {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 400;
+}
+
+.car-grid-cell__price {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-top: auto; /* Push price and button to bottom */
+}
+
+.car-grid-cell__cta {
+  margin-top: 0.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: var(--primary-color);
+  color: #ffffff;
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.car-grid-cell__cta:hover {
+  background: var(--primary-hover);
+}
+
+.car-grid-cell__cta:active {
+  transform: scale(0.98);
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .used-cars-page-inner-layout {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .sidebar {
+    flex: none;
+    width: 100%;
+    position: static;
+    max-height: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .cars-grid {
+    grid-template-columns: 1fr;
+  }
+}

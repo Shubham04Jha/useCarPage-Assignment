@@ -1,0 +1,1 @@
+export const MAX_CAR_FETCH_LIMIT = 120;

@@ -1,0 +1,1 @@
+export const BUDGET_FILTER_DEBOUNCE_RATE = 400;

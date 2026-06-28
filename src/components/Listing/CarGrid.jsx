@@ -1,6 +1,6 @@
 import { useMemo, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import CarGridCell from './CarGridCell';
+import CarCard from './CarCard';
 import { sortCars } from '../../utils/sortCars';
 
 function CarsGrid({ onLoadMore, hasMore }) {
@@ -47,7 +47,7 @@ function CarsGrid({ onLoadMore, hasMore }) {
     <div className="cars-grid-container">
       <div className="cars-grid" role="list">
         {sortedCars.map((car) => (
-          <CarGridCell
+          <CarCard
             key={car.stockId}
             car={car}
           />

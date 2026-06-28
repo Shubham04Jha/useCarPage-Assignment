@@ -1,6 +1,6 @@
 /* Page Layout and Container */
 .used-cars-page-layout {
-  max-width: 992px;
+  width: 80%;
   margin: 0 auto;
   padding: 2rem 1rem;
 }
@@ -20,18 +20,18 @@
 .used-cars-page-inner-layout {
   display: flex;
   gap: 1.5rem;
-  align-items: flex-start; /* Crucial for position: sticky to function */
+  align-items: flex-start;
+  /* Crucial for position: sticky to function */
 }
 
 /* Sidebar styling (Sticky & Scrollable) */
 .sidebar {
-  flex: 0 0 300px;
-  width: 300px;
+  flex: 1;
   position: sticky;
   top: 1.5rem;
   max-height: calc(100vh - 3rem);
   overflow-y: auto;
-  
+
   background-color: var(--bg-card);
   border: 1px solid var(--border-light);
   border-radius: 0.75rem;
@@ -150,7 +150,7 @@
 
 /* Listing section layout */
 .listing-section {
-  flex: 1;
+  flex: 3;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
@@ -167,7 +167,7 @@
   border: 1px solid var(--border-light);
   border-radius: 0.75rem;
   padding: 0.75rem 1.25rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 /* Applied Filter Pills */
@@ -256,7 +256,8 @@
   background-color: var(--bg-card);
   color: var(--text-main);
   transition: all 0.2s ease;
-  appearance: textfield; /* removes spinner buttons for clean look */
+  appearance: textfield;
+  /* removes spinner buttons for clean look */
 }
 
 .budget-input::-webkit-outer-spin-button,
@@ -331,7 +332,8 @@
   font-size: 1.2rem;
   font-weight: 700;
   color: var(--text-main);
-  margin-top: auto; /* Push price and button to bottom */
+  margin-top: auto;
+  /* Push price and button to bottom */
 }
 
 .car-grid-cell__cta {

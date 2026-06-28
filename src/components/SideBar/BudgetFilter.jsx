@@ -112,9 +112,9 @@ function BudgetSlider({ min, max, onChangeRange }) {
         step={1}
         disableSwap
         sx={{
-          color: "#e53935",
+          color: "#00857a",
           "& .MuiSlider-thumb": {
-            backgroundColor: "#e53935",
+            backgroundColor: "#00857a",
             "&:hover, &.Mui-focusVisible": {
               boxShadow: "0px 0px 0px 8px rgba(229, 57, 53, 0.16)",
             },
@@ -123,13 +123,13 @@ function BudgetSlider({ min, max, onChangeRange }) {
             },
           },
           "& .MuiSlider-track": {
-            backgroundColor: "#e53935",
+            backgroundColor: "#00857a",
           },
           "& .MuiSlider-rail": {
             backgroundColor: "#e0e0e0",
           },
           "& .MuiSlider-valueLabel": {
-            backgroundColor: "#e53935",
+            backgroundColor: "#00857a",
             color: "#fff",
           },
         }}

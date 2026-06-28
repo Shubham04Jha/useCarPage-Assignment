@@ -30,7 +30,7 @@ export const fetchCarsAsyncAction = (filters, page = 1, isPageLoad = false)=>{
   return async (dispatch, getState)=>{
     dispatch(fetchCarsRequest());
     try {
-      const existingStocks = getState().cars?.data?.stocks ?? [];
+      const existingStocks = getState().cars.data.stocks ?? [];
       const excludeStockIds = isPageLoad ? existingStocks.map(car => car.profileId).filter(Boolean) : [];
       const data = await getCars(filters, page, excludeStockIds);
       const sort = getState().listing?.sort;

@@ -3,7 +3,7 @@ import { apiEndpoints } from "./apiConfig";
 
 export async function getCars(filters, page, excludeStockIds = []) {
   const query = buildCarsQuery(filters, page, excludeStockIds);
-  const response = await fetch(apiEndpoints.stocks + query);
+  const response = await fetch(apiEndpoints.stocks +((query.length)?'?'+query:''));
   if (!response.ok) {
     throw new Error("Failed to fetch cars");
   }

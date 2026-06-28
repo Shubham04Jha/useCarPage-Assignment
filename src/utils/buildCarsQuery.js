@@ -21,5 +21,5 @@ export const buildCarsQuery = (filters, page=1, excludeStockIds = []) => {
     query.push(`excludestocks=${excludeStockIds.join("+")}`);
   }
 
-  return query.length ? `?${query.join("&")}` : "";
+  return query.length ? `${query.join("&")}` : "";
 };

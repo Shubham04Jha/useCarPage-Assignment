@@ -1,4 +1,4 @@
-export const buildCarsQuery = (filters, page, excludeStockIds = []) => {
+export const buildCarsQuery = (filters, page=1, excludeStockIds = []) => {
   const query = [];
 
   if (filters.fuelIds.length)

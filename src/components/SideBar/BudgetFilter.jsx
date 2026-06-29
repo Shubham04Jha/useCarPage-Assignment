@@ -45,7 +45,6 @@ export function BudgetFilter() {
 }
 
 function BudgetSlider({ min, max, onChangeRange }) {
-  // Local state for immediate smooth rendering of the slider handles (0 to 21)
   const [localMin, setLocalMin] = useState(
     min === "" ? 0 : Math.max(0, Math.min(21, Number(min)))
   );
@@ -53,13 +52,12 @@ function BudgetSlider({ min, max, onChangeRange }) {
     max === "" ? 21 : Math.max(0, Math.min(21, Number(max)))
   );
 
-  // Sync local state when min/max props change from elsewhere (like typing in input box)
+  
   useEffect(() => {
     setLocalMin(min === "" ? 0 : Math.max(0, Math.min(21, Number(min))));
     setLocalMax(max === "" ? 21 : Math.max(0, Math.min(21, Number(max))));
   }, [min, max]);
 
-  // Debounced parent updates to onChangeRange to avoid lagging during dragging
   const debouncedUpdate = useDebouncedCallback((newMinVal, newMaxVal) => {
     onChangeRange(newMinVal, newMaxVal);
   }, BUDGET_FILTER_DEBOUNCE_RATE);
@@ -69,7 +67,7 @@ function BudgetSlider({ min, max, onChangeRange }) {
       return;
     }
 
-    // Ensure they don't cross
+    // Ensure no cross
     let [newMin, newMax] = newValue;
     if (activeThumb === 0) {
       newMin = Math.min(newMin, localMax);
@@ -77,11 +75,9 @@ function BudgetSlider({ min, max, onChangeRange }) {
       newMax = Math.max(newMax, localMin);
     }
 
-    // Update local state instantly so the slider dragging is smooth
     setLocalMin(newMin);
     setLocalMax(newMax);
 
-    // Calculate the target values for parent state based on the required budget shapes
     let nextMinProp = "";
     let nextMaxProp = "";
 
@@ -96,7 +92,7 @@ function BudgetSlider({ min, max, onChangeRange }) {
       nextMaxProp = newMax.toString();
     }
 
-    // Call the debounced callback to update parent state (and dispatch redux)
+    // delayed state change 
     debouncedUpdate(nextMinProp, nextMaxProp);
   };
 

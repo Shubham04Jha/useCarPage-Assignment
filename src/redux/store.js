@@ -14,7 +14,7 @@ const getStateFromUrl = () => {
     "budget",
     "sort"
   ].some(key => params.has(key));
-  
+
   if (!hasUrlParam) {
     return null;
   }
@@ -26,7 +26,7 @@ const getStateFromUrl = () => {
     fuelIds = fuelParam
       .split(/[\s,+]+/)
       .map(Number)
-      .filter(n => !isNaN(n)&&n>=0&&n<FUELS.length);
+      .filter(n => !isNaN(n) && n >= 0 && n < FUELS.length);
   }
 
   // Parse car (makeId)
@@ -86,20 +86,21 @@ const getStateFromUrl = () => {
 const syncStateToUrl = (state) => {
   try {
     const params = new URLSearchParams(window.location.search);
-    
+
     // Clear old filter-related keys
     const keysToRemove = ["fuel", "car", "city", "budget", "sort"];
     keysToRemove.forEach(k => params.delete(k));
 
     const { filters, sort } = state;
-    
+
     const filterParamString = buildCarsQuery(filters);
-    
-    const sortParamString = (sort && sort.by && sort.order)?`sort=${sort.by}-${sort.order}`:'';
 
-    const newSearch = filterParamString+sortParamString;
+    const sortParamString = (sort && sort.by && sort.order) ? `sort=${sort.by}-${sort.order}` : '';
 
-    const newUrl = `${window.location.pathname}${newSearch ?('?'+ newSearch) : ""}`;
+    const newSearch = [filterParamString, sortParamString].filter(Boolean).join("&");
+
+
+    const newUrl = `${window.location.pathname}${newSearch ? ('?' + newSearch) : ""}`;
 
     window.history.replaceState(null, "", newUrl);
   } catch (err) {
@@ -121,7 +122,7 @@ const loadState = () => {
       return undefined;
     }
     const parsedState = JSON.parse(serializedState);
-    
+
     // Validate structural integrity of the parsed state
     if (
       parsedState &&
@@ -133,6 +134,7 @@ const loadState = () => {
     }
     return undefined;
   } catch (err) {
+    console.error('Error getting saved data from localStorage');
     return undefined;
   }
 };
@@ -142,7 +144,7 @@ const saveState = (state) => {
     const serializedState = JSON.stringify(state);
     localStorage.setItem("listing", serializedState);
   } catch (err) {
-    // Ignore write errors
+    console.error('Error saving data to localStorage');
   }
 };
 
@@ -155,6 +157,8 @@ export const store = createStore(
   preloadedState,
   applyMiddleware(thunk)
 );
+
+syncStateToUrl(store.getState().listing);
 
 let lastListing = store.getState().listing;
 store.subscribe(() => {

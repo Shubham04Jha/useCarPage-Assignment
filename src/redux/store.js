@@ -15,6 +15,7 @@ export const store = createStore(
 
 // Sync initial state on load
 syncStateToUrl(store.getState().listing);
+saveState(store.getState().listing);
 
 let lastListing = store.getState().listing;
 store.subscribe(() => {

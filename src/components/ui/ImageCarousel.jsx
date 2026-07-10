@@ -51,6 +51,25 @@ const nextButtonStyles = {
   right: '0.65rem',
 };
 
+const indicatorStyles = {
+  position: 'absolute',
+  top: '0.75rem',
+  right: '0.75rem',
+  background: 'rgba(17, 24, 39, 0.75)',
+  color: '#ffffff',
+  padding: '0.25rem 0.6rem',
+  borderRadius: '999px',
+  fontSize: '0.75rem',
+  fontWeight: '600',
+  backdropFilter: 'blur(4px)',
+  WebkitBackdropFilter: 'blur(4px)',
+  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
+  zIndex: 10,
+  pointerEvents: 'none',
+  userSelect: 'none',
+  fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+};
+
 function normalizeImages(images) {
   if (!Array.isArray(images)) {
     return [];
@@ -95,6 +114,9 @@ function ImageCarousel({ images = [], altText = 'Carousel image' }) {
 
       {normalizedImages.length > 1 && (
         <>
+          <div style={indicatorStyles}>
+            {activeIndex + 1} / {normalizedImages.length}
+          </div>
           <button
             type="button"
             style={prevButtonStyles}

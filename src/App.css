@@ -378,3 +378,112 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* NoCarsFound Styles */
+.no-cars-container {
+  padding: 3.5rem 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bg-card);
+  border: 1px dashed var(--border-dark);
+  border-radius: 0.75rem;
+}
+
+.no-cars-card {
+  text-align: center;
+  max-width: 420px;
+  width: 100%;
+}
+
+.no-cars-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 0.75rem;
+}
+
+.no-cars-description {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.no-cars-btn {
+  display: inline-block;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  border: none;
+  font-weight: 600;
+  padding: 0.65rem 1.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: background-color 0.2s ease;
+}
+
+.no-cars-btn:hover {
+  background-color: var(--primary-hover);
+}
+
+/* NotFoundPage Styles */
+.not-found-container {
+  min-height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background-color: var(--bg-page);
+  font-family: 'Inter', sans-serif;
+}
+
+.not-found-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 0.75rem;
+  padding: 3rem 2rem;
+  max-width: 450px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+.not-found-code {
+  font-size: 4rem;
+  font-weight: 800;
+  color: var(--primary-color);
+  margin: 0;
+  line-height: 1;
+}
+
+.not-found-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 1rem 0 0.75rem;
+}
+
+.not-found-description {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.not-found-btn {
+  display: inline-block;
+  background-color: var(--primary-color);
+  color: #ffffff !important;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.not-found-btn:hover {
+  background-color: var(--primary-hover);
+}

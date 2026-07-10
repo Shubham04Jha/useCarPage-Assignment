@@ -1,12 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { clearFilters } from '../../redux/actions/listingActions';
-import './NoCarsFound.css';
 
 export default function NoCarsFound() {
   const dispatch = useDispatch();
   const filters = useSelector((state) => state.listing.filters || {});
 
-  const hasActiveFilters = 
+  const hasActiveFilters =
     (filters.fuelIds && filters.fuelIds.length > 0) ||
     (filters.makeIds && filters.makeIds.length > 0) ||
     filters.cityId !== null ||

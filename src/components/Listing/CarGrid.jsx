@@ -3,10 +3,14 @@ import { useSelector } from 'react-redux';
 import CarCard from './CarCard';
 import { sortCars } from '../../utils/sortCars';
 
+import NoCarsFound from '../ui/NoCarsFound';
+
 function CarsGrid({ onLoadMore, hasMore }) {
   const cars = useSelector((state) => state.cars?.data?.stocks ?? []);
   const sort = useSelector((state) => state.listing.sort);
   const loading = useSelector((state) => state.cars.loading);
+
+  const totalCars = useSelector((state) => state.cars?.data?.totalCount ?? 0);
 
   const sortedCars = useMemo(() => sortCars(cars, sort), [cars, sort]);
 
@@ -39,8 +43,8 @@ function CarsGrid({ onLoadMore, hasMore }) {
     return <div className="cars-grid__empty">Loading cars...</div>;
   }
 
-  if (!loading && sortedCars.length === 0) {
-    return <div className="cars-grid__empty">No cars available</div>;
+  if (!loading && (sortedCars.length === 0 || totalCars === 0)) {
+    return <NoCarsFound />;
   }
 
   return (

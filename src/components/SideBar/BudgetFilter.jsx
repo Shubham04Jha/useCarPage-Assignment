@@ -130,6 +130,10 @@ function BudgetSlider({ min, max, onChangeRange }) {
           },
         }}
       />
+      <div style={{ display: "flex", justifyContent: "space-between", marginTop: "-0.25rem", fontSize: "0.75rem", color: "#757575" }}>
+        <span>0 Lakh</span>
+        <span>20+ Lakhs</span>
+      </div>
     </div>
   );
 }
@@ -228,7 +232,7 @@ function MinMaxBudgetBox({ min, max, onChangeRange }) {
           onChange={handleMinChange}
           onKeyDown={handleKeyDown}
           onBlur={handleBlur}
-          placeholder="Min"
+          placeholder="0"
           className="budget-input"
         />
 
@@ -243,7 +247,7 @@ function MinMaxBudgetBox({ min, max, onChangeRange }) {
           onChange={handleMaxChange}
           onKeyDown={handleKeyDown}
           onBlur={handleBlur}
-          placeholder="Max"
+          placeholder="20+ Lakhs"
           className="budget-input"
         />
       </div>

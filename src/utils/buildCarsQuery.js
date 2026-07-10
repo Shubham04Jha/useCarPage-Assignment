@@ -1,4 +1,4 @@
-export const buildCarsQuery = (filters, page=1, excludeStockIds = []) => {
+export const buildCarsQuery = (filters) => {
   const query = [];
 
   if (filters.fuelIds.length)
@@ -12,14 +12,6 @@ export const buildCarsQuery = (filters, page=1, excludeStockIds = []) => {
 
   if (filters.budget)
     query.push(`budget=${filters.budget.min}-${filters.budget.max ?? ''}`);
-
-  if (page && page > 1) {
-    query.push(`pn=${page}`);
-  }
-
-  if (excludeStockIds && excludeStockIds.length > 0) {
-    query.push(`excludestocks=${excludeStockIds.join("+")}`);
-  }
 
   return query.length ? `${query.join("&")}` : "";
 };

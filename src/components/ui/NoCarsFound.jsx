@@ -8,8 +8,8 @@ export default function NoCarsFound() {
   const hasActiveFilters =
     (filters.fuelIds && filters.fuelIds.length > 0) ||
     (filters.makeIds && filters.makeIds.length > 0) ||
-    filters.cityId !== null ||
-    filters.budget !== null;
+    filters.cityId != null ||
+    filters.budget != null;
 
   return (
     <div className="no-cars-container">

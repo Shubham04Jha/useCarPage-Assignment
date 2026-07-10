@@ -9,7 +9,8 @@ export const getStateFromUrl = () => {
     "fuel",
     "car",
     "budget",
-    "sort"
+    "sort",
+    "city"
   ].some(key => params.has(key));
 
   if (!hasUrlParam) {

@@ -2,10 +2,12 @@ import { useMemo, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import CarCard from './CarCard';
 import { sortCars } from '../../utils/sortCars';
+import { useUsedCarsContext } from '../../hooks/useUsedCarsContext';
 
 import NoCarsFound from '../ui/NoCarsFound';
 
-function CarsGrid({ onLoadMore, hasMore }) {
+function CarsGrid() {
+  const { onLoadMore, hasMore } = useUsedCarsContext();
   const cars = useSelector((state) => state.cars?.data?.stocks ?? []);
   const sort = useSelector((state) => state.listing.sort);
   const loading = useSelector((state) => state.cars.loading);

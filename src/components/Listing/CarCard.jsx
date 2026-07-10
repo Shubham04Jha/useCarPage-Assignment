@@ -1,7 +1,10 @@
 import ImageCarousel from '../ui/ImageCarousel';
+import { useModalContext } from '../../hooks/useModalContext';
 
 function CarCard({car}) {
   const { stockImages: images, carName, km, fuel, cityName, price, areaName, makeYear } = car;
+  const { openModal } = useModalContext();
+
   return (
     <article className="car-grid-cell">
       <ImageCarousel images={images} altText={carName} />
@@ -10,7 +13,7 @@ function CarCard({car}) {
         <h3 className="car-grid-cell__title">{makeYear} {carName}</h3>
         <p className="car-grid-cell__meta">{`${km} km | ${fuel} | ${areaName}, ${cityName}`}</p>
         <p className="car-grid-cell__price">{price}</p>
-        <button type="button" className="car-grid-cell__cta">
+        <button type="button" className="car-grid-cell__cta" onClick={openModal}>
           Get Seller Details
         </button>
       </div>

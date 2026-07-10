@@ -1,1 +1,1 @@
-export const MAX_CAR_FETCH_LIMIT = 120;
+export const MAX_CAR_FETCH_LIMIT = 1200;

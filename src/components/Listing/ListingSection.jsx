@@ -1,11 +1,11 @@
 import ListingToolbar from './ListingToolBar';
 import CarsGrid from './CarGrid';
 
-function ListingSection({ onLoadMore, hasMore }) {
+function ListingSection() {
   return (
     <section className="listing-section">
       <ListingToolbar />
-      <CarsGrid onLoadMore={onLoadMore} hasMore={hasMore} />
+      <CarsGrid />
     </section>
   );
 }

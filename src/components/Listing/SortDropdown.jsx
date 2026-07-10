@@ -34,7 +34,7 @@ function SortDropdown() {
   return (
     <div className="sort-dropdown-container">
       <select value={getSortValue(sort)} onChange={handleChange} className="sort-dropdown-select">
-        <option value="">Sort By</option>
+        <option value="">Best Match</option>
         <option value="price-asc">Price - Low to High</option>
         <option value="price-desc">Price - High to Low</option>
         <option value="makeYear-asc">Year - Old to New</option>

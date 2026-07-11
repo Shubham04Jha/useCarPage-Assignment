@@ -1,25 +1,24 @@
-export const buildCarsQuery = (filters, page=1, excludeStockIds = []) => {
+import {
+  QUERY_KEY_FUEL,
+  QUERY_KEY_CAR,
+  QUERY_KEY_CITY,
+  QUERY_KEY_BUDGET
+} from "../constants/filterKeys";
+
+export const buildCarsQuery = (filters) => {
   const query = [];
 
   if (filters.fuelIds.length)
-    query.push(`fuel=${filters.fuelIds.join("+")}`);
+    query.push(`${QUERY_KEY_FUEL}=${filters.fuelIds.join("+")}`);
 
   if (filters.makeIds.length)
-    query.push(`car=${filters.makeIds.join("+")}`);
+    query.push(`${QUERY_KEY_CAR}=${filters.makeIds.join("+")}`);
 
   if (filters.cityId !== null)
-    query.push(`city=${filters.cityId}`);
+    query.push(`${QUERY_KEY_CITY}=${filters.cityId}`);
 
   if (filters.budget)
-    query.push(`budget=${filters.budget.min}-${filters.budget.max ?? ''}`);
-
-  if (page && page > 1) {
-    query.push(`pn=${page}`);
-  }
-
-  if (excludeStockIds && excludeStockIds.length > 0) {
-    query.push(`excludestocks=${excludeStockIds.join("+")}`);
-  }
+    query.push(`${QUERY_KEY_BUDGET}=${filters.budget.min}-${filters.budget.max ?? ''}`);
 
   return query.length ? `${query.join("&")}` : "";
 };

@@ -26,13 +26,11 @@ const fetchCarsSuccess = (carsData, isPageLoad = false)=>{
   }
 };
 
-export const fetchCarsAsyncAction = (filters, page = 1, isPageLoad = false)=>{
+export const fetchCarsAsyncAction = (filters, isPageLoad = false, nextPageUrl = null)=>{
   return async (dispatch, getState)=>{
     dispatch(fetchCarsRequest());
     try {
-      const existingStocks = getState().cars.data.stocks ?? [];
-      const excludeStockIds = isPageLoad ? existingStocks.map(car => car.profileId).filter(Boolean) : [];
-      const data = await getCars(filters, page, excludeStockIds);
+      const data = await getCars(filters, nextPageUrl);
       const sort = getState().listing?.sort;
       if (data && data.stocks && sort) {
         data.stocks = sortCars(data.stocks, sort);

@@ -23,7 +23,7 @@ export function CityFilter() {
 
   return (
     <CollapsibleHeader title="City">
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginTop: "0.5rem" }}>
+      <div className="filter-options-container">
         <SearchAutocomplete
           options={cities}
           value={selectedCity}
@@ -34,21 +34,21 @@ export function CityFilter() {
           renderOption={(props, option) => {
             const { key, ...liProps } = props;
             return (
-              <li key={option.CityId} {...liProps} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-                <span style={{ fontSize: '0.875rem', color: '#1f2937', fontWeight: 500 }}>{option.CityName}</span>
-                <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>{option.StateName}</span>
+              <li key={option.CityId} {...liProps} className="autocomplete-item">
+                <span className="autocomplete-item-name">{option.CityName}</span>
+                <span className="autocomplete-item-sub">{option.StateName}</span>
               </li>
             );
           }}
         />
 
         {selectedCity && (
-          <div style={{ fontSize: "0.85rem", color: "#4b5563" }}>
-            Selected: <strong style={{ color: "#e53935" }}>{selectedCity.CityName}</strong>
+          <div className="selected-city-label">
+            Selected: <strong>{selectedCity.CityName}</strong>
           </div>
         )}
 
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
+        <div className="city-pills-container">
           {popularCities.map((city) => {
             const isActive = selectedCityId === city.CityId;
 
@@ -72,29 +72,7 @@ function CityPill({ city, isActive, onSelect }) {
     <button
       type="button"
       onClick={() => onSelect(isActive ? null : city)}
-      style={{
-        border: isActive ? "1px solid #e53935" : "1px solid #d1d5db",
-        backgroundColor: isActive ? "#fef2f2" : "#fff",
-        color: isActive ? "#e53935" : "#374151",
-        borderRadius: "999px",
-        padding: "0.35rem 0.7rem",
-        cursor: "pointer",
-        fontSize: "0.8rem",
-        fontWeight: isActive ? 600 : 400,
-        transition: "all 0.2s ease",
-      }}
-      onMouseEnter={(e) => {
-        if (!isActive) {
-          e.currentTarget.style.borderColor = "#e53935";
-          e.currentTarget.style.color = "#e53935";
-        }
-      }}
-      onMouseLeave={(e) => {
-        if (!isActive) {
-          e.currentTarget.style.borderColor = "#d1d5db";
-          e.currentTarget.style.color = "#374151";
-        }
-      }}
+      className={`city-pill-btn ${isActive ? 'city-pill-btn--active' : ''}`}
     >
       {city.CityName}
     </button>

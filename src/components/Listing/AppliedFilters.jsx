@@ -87,8 +87,7 @@ function AppliedFilters() {
       <button
         type="button"
         onClick={() => dispatch(clearFilters())}
-        className="sidebar-header__clear-btn"
-        style={{ marginLeft: '0.5rem' }}
+        className="sidebar-header__clear-btn applied-filters__clear-btn"
       >
         Clear all
       </button>

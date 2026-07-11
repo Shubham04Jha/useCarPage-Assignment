@@ -12,6 +12,7 @@ import {
   SORT_ORDER_ASC,
   SORT_ORDER_DESC
 } from "../constants/filterKeys";
+import { BUDGET_MIN_LAKHS, BUDGET_MAX_LAKHS } from "../constants/budgetLimits";
 
 // parse url params => state
 export const getStateFromUrl = () => {
@@ -52,10 +53,14 @@ export const getStateFromUrl = () => {
   const budgetParam = params.get(QUERY_KEY_BUDGET);
   if (budgetParam) {
     const parts = budgetParam.split("-");
-    const min = parts[0] === "" ? 0 : Number(parts[0]);
-    const max = (parts[1] === undefined || parts[1] === "") ? null : Number(parts[1]);
-    if (!isNaN(min) && (max === null || !isNaN(max))) {
-      budget = { min, max };
+    const parsedMin = parts[0] === "" ? 0 : Number(parts[0]);
+    const parsedMax = (parts[1] === undefined || parts[1] === "") ? null : Number(parts[1]);
+    if (
+      !isNaN(parsedMin) && parsedMin >= BUDGET_MIN_LAKHS && parsedMin <= BUDGET_MAX_LAKHS &&
+      (parsedMax === null || (!isNaN(parsedMax) && parsedMax >= BUDGET_MIN_LAKHS && parsedMax <= BUDGET_MAX_LAKHS)) &&
+      (parsedMax === null || parsedMin <= parsedMax)
+    ) {
+      budget = { min: parsedMin, max: parsedMax };
     }
   }
 
@@ -111,7 +116,7 @@ export const syncStateToUrl = (state) => {
     const newUrl = `${window.location.pathname}${newSearch ? ('?' + newSearch) : ""}`;
 
     window.history.replaceState(null, "", newUrl);
-  } catch (err) {
+  } catch {
     console.log('url serilization failed. Using default states')
   }
 };
@@ -141,7 +146,7 @@ export const loadState = () => {
       return parsedState;
     }
     return undefined;
-  } catch (err) {
+  } catch {
     console.error('Error getting saved data from localStorage');
     return undefined;
   }
@@ -151,7 +156,7 @@ export const saveState = (state) => {
   try {
     const serializedState = JSON.stringify(state);
     localStorage.setItem(STORAGE_KEY_LISTING, serializedState);
-  } catch (err) {
+  } catch {
     console.error('Error saving data to localStorage');
   }
 };

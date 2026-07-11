@@ -1,9 +1,11 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { useState, useEffect, useCallback } from "react";
 import { CollapsibleHeader } from "../ui/CollapsibleHeader";
 import { useDebouncedCallback } from "../../hooks/useDebounceCallback";
 import { useDispatch, useSelector } from "react-redux";
 import { setBudget } from "../../redux/actions/listingActions";
 import { BUDGET_FILTER_DEBOUNCE_RATE } from "../../constants/debounceRates";
+import { BUDGET_MIN_LAKHS, BUDGET_MAX_LAKHS } from "../../constants/budgetLimits";
 import Slider from "@mui/material/Slider";
 
 
@@ -78,8 +80,8 @@ function BudgetSlider({ min, max, onChangeRange }) {
     setLocalMin(newMin);
     setLocalMax(newMax);
 
-    let nextMinProp = "";
-    let nextMaxProp = "";
+    let nextMinProp;
+    let nextMaxProp;
 
     if (newMin === 0 && newMax === 21) {
       nextMinProp = "";
@@ -165,6 +167,14 @@ function validateBudgetInput(localMin, localMax) {
   const min = parseBudgetValue(localMin);
   const max = parseBudgetValue(localMax);
 
+  if (min !== null && min > BUDGET_MAX_LAKHS) {
+    return { valid: false, errorMessage: `Min cannot exceed ${BUDGET_MAX_LAKHS} Lakhs.` };
+  }
+
+  if (max !== null && max > BUDGET_MAX_LAKHS) {
+    return { valid: false, errorMessage: `Max cannot exceed ${BUDGET_MAX_LAKHS} Lakhs.` };
+  }
+
   if (min !== null && max !== null && min > max) {
     return { valid: false, errorMessage: "Min cannot be greater than max." };
   }
@@ -225,8 +235,8 @@ function MinMaxBudgetBox({ min, max, onChangeRange }) {
       <div className="budget-input-container">
         <input
           type="number"
-          min={0}
-          max={2000}
+          min={BUDGET_MIN_LAKHS}
+          max={BUDGET_MAX_LAKHS}
           step={1}
           value={localMin}
           onChange={handleMinChange}
@@ -240,8 +250,8 @@ function MinMaxBudgetBox({ min, max, onChangeRange }) {
 
         <input
           type="number"
-          min={0}
-          max={2000}
+          min={BUDGET_MIN_LAKHS}
+          max={BUDGET_MAX_LAKHS}
           step={1}
           value={localMax}
           onChange={handleMaxChange}

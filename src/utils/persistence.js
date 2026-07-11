@@ -1,5 +1,17 @@
 import { buildCarsQuery } from "./buildCarsQuery";
 import { FUELS } from "../constants/fuel";
+import {
+  STORAGE_KEY_LISTING,
+  QUERY_KEY_FUEL,
+  QUERY_KEY_CAR,
+  QUERY_KEY_CITY,
+  QUERY_KEY_BUDGET,
+  QUERY_KEY_SORT,
+  SORT_BY_PRICE,
+  SORT_BY_YEAR,
+  SORT_ORDER_ASC,
+  SORT_ORDER_DESC
+} from "../constants/filterKeys";
 
 // parse url params => state
 export const getStateFromUrl = () => {
@@ -7,7 +19,7 @@ export const getStateFromUrl = () => {
 
   // Parse fuel
   let fuelIds = [];
-  const fuelParam = params.get("fuel");
+  const fuelParam = params.get(QUERY_KEY_FUEL);
   if (fuelParam) {
     fuelIds = fuelParam
       .split(/[\s,+]+/)
@@ -17,7 +29,7 @@ export const getStateFromUrl = () => {
 
   // Parse car (makeId)
   let makeIds = [];
-  const makeParam = params.get("car");
+  const makeParam = params.get(QUERY_KEY_CAR);
   if (makeParam) {
     makeIds = makeParam
       .split(/[\s,+]+/)
@@ -27,7 +39,7 @@ export const getStateFromUrl = () => {
 
   // Parse cityId
   let cityId = null;
-  const cityParam = params.get("city");
+  const cityParam = params.get(QUERY_KEY_CITY);
   if (cityParam) {
     const parsedCity = Number(cityParam);
     if (!isNaN(parsedCity)) {
@@ -37,7 +49,7 @@ export const getStateFromUrl = () => {
 
   // Parse budget (format: min-max)
   let budget = null;
-  const budgetParam = params.get("budget");
+  const budgetParam = params.get(QUERY_KEY_BUDGET);
   if (budgetParam) {
     const parts = budgetParam.split("-");
     const min = parts[0] === "" ? 0 : Number(parts[0]);
@@ -49,10 +61,10 @@ export const getStateFromUrl = () => {
 
   // Parse sort (format: by-order)
   let sort = null;
-  const sortParam = params.get("sort");
+  const sortParam = params.get(QUERY_KEY_SORT);
   if (sortParam) {
     const [by, order] = sortParam.split("-");
-    if (by && order && (by === "price" || by === "makeYear") && (order === "asc" || order === "desc")) {
+    if (by && order && (by === SORT_BY_PRICE || by === SORT_BY_YEAR) && (order === SORT_ORDER_ASC || order === SORT_ORDER_DESC)) {
       sort = { by, order };
     }
   }
@@ -85,14 +97,14 @@ export const syncStateToUrl = (state) => {
     const params = new URLSearchParams(window.location.search);
 
     // Clear old filter-related keys
-    const keysToRemove = ["fuel", "car", "city", "budget", "sort"];
+    const keysToRemove = [QUERY_KEY_FUEL, QUERY_KEY_CAR, QUERY_KEY_CITY, QUERY_KEY_BUDGET, QUERY_KEY_SORT];
     keysToRemove.forEach(k => params.delete(k));
 
     const { filters, sort } = state;
 
     const filterParamString = buildCarsQuery(filters);
 
-    const sortParamString = (sort && sort.by && sort.order) ? `sort=${sort.by}-${sort.order}` : '';
+    const sortParamString = (sort && sort.by && sort.order) ? `${QUERY_KEY_SORT}=${sort.by}-${sort.order}` : '';
 
     const newSearch = [filterParamString, sortParamString].filter(Boolean).join("&");
 
@@ -113,7 +125,7 @@ export const loadState = () => {
 
   // 2. Check localStorage
   try {
-    const serializedState = localStorage.getItem("listing");
+    const serializedState = localStorage.getItem(STORAGE_KEY_LISTING);
     if (serializedState === null) {
       return undefined;
     }
@@ -138,7 +150,7 @@ export const loadState = () => {
 export const saveState = (state) => {
   try {
     const serializedState = JSON.stringify(state);
-    localStorage.setItem("listing", serializedState);
+    localStorage.setItem(STORAGE_KEY_LISTING, serializedState);
   } catch (err) {
     console.error('Error saving data to localStorage');
   }

@@ -4,18 +4,6 @@ import { FUELS } from "../constants/fuel";
 // parse url params => state
 export const getStateFromUrl = () => {
   const params = new URLSearchParams(window.location.search);
-  // check current url param
-  const hasUrlParam = [
-    "fuel",
-    "car",
-    "budget",
-    "sort",
-    "city"
-  ].some(key => params.has(key));
-
-  if (!hasUrlParam) {
-    return null;
-  }
 
   // Parse fuel
   let fuelIds = [];
@@ -67,6 +55,17 @@ export const getStateFromUrl = () => {
     if (by && order && (by === "price" || by === "makeYear") && (order === "asc" || order === "desc")) {
       sort = { by, order };
     }
+  }
+
+  const hasValidParams =
+    fuelIds.length > 0 ||
+    makeIds.length > 0 ||
+    cityId !== null ||
+    budget !== null ||
+    sort !== null;
+
+  if (!hasValidParams) {
+    return null;
   }
 
   return {

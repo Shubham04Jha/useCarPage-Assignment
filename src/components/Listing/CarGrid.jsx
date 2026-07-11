@@ -1,20 +1,23 @@
 import { useMemo, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import CarCard from './CarCard';
 import { sortCars } from '../../utils/sortCars';
-import { useUsedCarsContext } from '../../hooks/useUsedCarsContext';
+import { fetchCarsAsyncAction } from '../../redux';
+import { MAX_CAR_FETCH_LIMIT } from '../../constants/infiniteFetch';
 
 import NoCarsFound from '../ui/NoCarsFound';
 
 function CarsGrid() {
-  const { onLoadMore, hasMore } = useUsedCarsContext();
+  const dispatch = useDispatch();
   const cars = useSelector((state) => state.cars?.data?.stocks ?? []);
   const sort = useSelector((state) => state.listing.sort);
   const loading = useSelector((state) => state.cars.loading);
-
   const totalCars = useSelector((state) => state.cars?.data?.totalCount ?? 0);
+  const nextPageUrl = useSelector((state) => state.cars?.data?.nextPageUrl ?? null);
+  const filters = useSelector((state) => state.listing.filters);
 
   const sortedCars = useMemo(() => sortCars(cars, sort), [cars, sort]);
+  const hasMore = cars.length < Math.min(totalCars, MAX_CAR_FETCH_LIMIT);
 
   const observerRef = useRef(null);
   const sentinelRef = useRef(null);
@@ -25,8 +28,8 @@ function CarsGrid() {
     }
 
     observerRef.current = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting && hasMore && !loading && onLoadMore) {
-        onLoadMore();
+      if (entries[0].isIntersecting && hasMore && !loading && nextPageUrl) {
+        dispatch(fetchCarsAsyncAction(filters, true, nextPageUrl));
       }
     });
 
@@ -39,7 +42,7 @@ function CarsGrid() {
         observerRef.current.disconnect();
       }
     };
-  }, [hasMore, loading, onLoadMore]);
+  }, [hasMore, loading, nextPageUrl, filters, dispatch]);
 
   if (loading && sortedCars.length === 0) {
     return <div className="cars-grid__empty">Loading cars...</div>;

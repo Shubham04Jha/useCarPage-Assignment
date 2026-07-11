@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import ImageCarousel from '../ui/ImageCarousel';
 import { useModalContext } from '../../hooks/useModalContext';
 
@@ -5,8 +6,16 @@ function CarCard({ car }) {
   const { stockImages: images, carName, km, fuel, cityName, price, areaName, makeYear, additionalFuel, deliveryCity } = car;
   const { openModal } = useModalContext();
 
+  const selectedCityId = useSelector((state) => state.listing.filters.cityId);
+  const selectedCityName = useSelector((state) => {
+    const cityObj = state.cities.byId[selectedCityId];
+    return cityObj ? cityObj.CityName : null;
+  });
+
   const fuelDisplay = additionalFuel ? `${fuel} + 1` : fuel;
-  const deliveryDisplay = (deliveryCity && deliveryCity !== 0) ? ` | Delivered in selected city` : '';
+  const deliveryDisplay = (selectedCityId && deliveryCity === selectedCityId && selectedCityName)
+    ? ` | Delivered in ${selectedCityName}`
+    : '';
 
   return (
     <article className="car-grid-cell">

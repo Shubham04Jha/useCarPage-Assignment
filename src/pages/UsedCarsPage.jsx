@@ -11,7 +11,7 @@ function UsedCarsPage() {
   return (
     <Layout>
       <h1 className="page-title">
-        {pageData.totalCars} <span className="page-title__sub">Used Cars in {pageData.cityName}</span>
+        {pageData.totalCars} <span className="page-title__sub">Used Cars in {pageData.cityName || 'India'}</span>
       </h1>
       <div className='used-cars-page-inner-layout'>
         <SideBar />

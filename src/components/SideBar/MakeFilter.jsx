@@ -59,7 +59,7 @@ export function MakeFilter() {
 
   return (
     <CollapsibleHeader title="Make">
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginTop: "0.5rem" }}>
+      <div className="filter-options-container">
         <SearchAutocomplete
           options={makes}
           value={null} // Keep it null so it acts as an action selector that clears after select
@@ -71,12 +71,12 @@ export function MakeFilter() {
             const { key, ...liProps } = props;
             const isChecked = makeIds.includes(option.makeId);
             return (
-              <li key={option.makeId} {...liProps} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-                <span style={{ fontSize: '0.875rem', color: '#1f2937', fontWeight: isChecked ? 600 : 400 }}>
+              <li key={option.makeId} {...liProps} className="autocomplete-item">
+                <span className={`autocomplete-item-name ${isChecked ? 'autocomplete-item-name--selected' : ''}`}>
                   {option.makeName}
                 </span>
                 {isChecked && (
-                  <span style={{ fontSize: '0.75rem', color: '#e53935', fontWeight: 600 }}>
+                  <span className="autocomplete-item-status">
                     ✓ Selected
                   </span>
                 )}
@@ -85,7 +85,7 @@ export function MakeFilter() {
           }}
         />
 
-        <div style={{ fontSize: "0.75rem", color: "#6b7280", marginTop: "0.25rem" }}>
+        <div className="filter-section-subtitle">
           Popular Brands
         </div>
         {renderMakeList(popularMakes)}
@@ -94,7 +94,7 @@ export function MakeFilter() {
           <>
             {showAllBrands && (
               <>
-                <div style={{ fontSize: "0.75rem", color: "#6b7280", marginTop: "0.5rem" }}>
+                <div className="filter-section-subtitle" style={{ marginTop: '0.5rem' }}>
                   All Brands
                 </div>
                 {renderMakeList(allMakes)}
@@ -104,17 +104,7 @@ export function MakeFilter() {
             <button
               type="button"
               onClick={() => setShowAllBrands((prev) => !prev)}
-              style={{
-                color: "#e53935", // Red theme color
-                cursor: "pointer",
-                background: "transparent",
-                border: "none",
-                padding: 0,
-                marginTop: "0.25rem",
-                textAlign: "left",
-                fontSize: "0.85rem",
-                fontWeight: 500,
-              }}
+              className="show-all-brands-btn"
             >
               {showAllBrands ? "Collapse" : "Show all brands"}
             </button>

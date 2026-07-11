@@ -97,7 +97,7 @@ function BudgetSlider({ min, max, onChangeRange }) {
   };
 
   return (
-    <div style={{ padding: "0 0.75rem", marginBottom: "1rem" }}>
+    <div className="budget-slider-wrapper">
       <Slider
         value={[localMin, localMax]}
         onChange={handleChange}
@@ -108,29 +108,29 @@ function BudgetSlider({ min, max, onChangeRange }) {
         step={1}
         disableSwap
         sx={{
-          color: "#00857a",
+          color: "var(--teal-color)",
           "& .MuiSlider-thumb": {
-            backgroundColor: "#00857a",
+            backgroundColor: "var(--teal-color)",
             "&:hover, &.Mui-focusVisible": {
-              boxShadow: "0px 0px 0px 8px rgba(229, 57, 53, 0.16)",
+              boxShadow: "0px 0px 0px 8px var(--primary-alpha-16)",
             },
             "&.Mui-active": {
-              boxShadow: "0px 0px 0px 14px rgba(229, 57, 53, 0.16)",
+              boxShadow: "0px 0px 0px 14px var(--primary-alpha-16)",
             },
           },
           "& .MuiSlider-track": {
-            backgroundColor: "#00857a",
+            backgroundColor: "var(--teal-color)",
           },
           "& .MuiSlider-rail": {
-            backgroundColor: "#e0e0e0",
+            backgroundColor: "var(--border-rail)",
           },
           "& .MuiSlider-valueLabel": {
-            backgroundColor: "#00857a",
-            color: "#fff",
+            backgroundColor: "var(--teal-color)",
+            color: "var(--text-light)",
           },
         }}
       />
-      <div style={{ display: "flex", justifyContent: "space-between", marginTop: "-0.25rem", fontSize: "0.75rem", color: "#757575" }}>
+      <div className="budget-slider-labels">
         <span>0 Lakh</span>
         <span>20+ Lakhs</span>
       </div>
@@ -236,7 +236,7 @@ function MinMaxBudgetBox({ min, max, onChangeRange }) {
           className="budget-input"
         />
 
-        <span style={{ color: "var(--text-muted)", fontSize: "0.85rem" }}>to</span>
+        <span className="budget-input-separator">to</span>
 
         <input
           type="number"
@@ -251,7 +251,7 @@ function MinMaxBudgetBox({ min, max, onChangeRange }) {
           className="budget-input"
         />
       </div>
-      {errorMessage && <p style={{ color: "red", margin: "0.5rem 0 0", fontSize: "0.8rem" }}>{errorMessage}</p>}
+      {errorMessage && <p className="budget-error-message">{errorMessage}</p>}
     </div>
   );
 }

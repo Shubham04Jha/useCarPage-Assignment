@@ -60,9 +60,9 @@ function CarsGrid() {
         ))}
       </div>
       {/* Sentinel element for infinite scroll */}
-      <div ref={sentinelRef} style={{ height: '10px', margin: '5px 0' }} />
+      <div ref={sentinelRef} className="sentinel-spacer" />
       {loading && (
-        <div className="cars-grid__loading-more" style={{ textAlign: 'center', padding: '1rem', color: '#6b7280' }}>
+        <div className="cars-grid__loading-more loading-more-label">
           Loading more cars...
         </div>
       )}

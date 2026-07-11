@@ -21,7 +21,7 @@ export function FuelFilter() {
       <CollapsibleHeader
         title="Fuel"
       >
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginTop: "0.5rem" }}>
+        <div className="filter-options-container">
           {FUELS.map((fuel) => (
             <label
               key={fuel.id}

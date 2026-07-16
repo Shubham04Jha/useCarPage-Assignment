@@ -3,7 +3,7 @@ import ImageCarousel from '../ui/ImageCarousel';
 import { useModalContext } from '../../hooks/useModalContext';
 
 function CarCard({ car }) {
-  const { stockImages: images, carName, km, fuel, cityName, price, areaName, makeYear, additionalFuel, deliveryCity } = car;
+  const { imageUrls: images, carName, KilometersDriven:km, fuelType: fuel, cityName, formattedPrice: price, areaName, registrationYear: makeYear, additionalFuel, deliveryCity } = car;
   const { openModal } = useModalContext();
 
   const selectedCityId = useSelector((state) => state.listing.filters.cityId);

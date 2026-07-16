@@ -7,7 +7,8 @@ export default defineConfig({
   server:{
     proxy:{
       '/api': {
-        target: 'https://www.carwale.com',
+        target: 'https://localhost:7006',
+        // target: 'https://www.carwale.com',
         // target: 'https://stg.carwale.com',
         changeOrigin: true,
       },

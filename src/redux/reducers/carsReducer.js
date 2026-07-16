@@ -4,6 +4,7 @@ const initialState = {
   data: {
     stocks: [],
     newPageUrl: null,
+    totalCount: 0,
   },
   loading: false,
   error: '',

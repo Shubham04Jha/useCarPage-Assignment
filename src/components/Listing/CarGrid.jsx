@@ -1,11 +1,12 @@
-import { useMemo, useEffect, useRef } from 'react';
+import { useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import CarCard from './CarCard';
 import { sortCars } from '../../utils/sortCars';
 import { fetchCarsAsyncAction } from '../../redux';
 import { MAX_CAR_FETCH_LIMIT } from '../../constants/infiniteFetch';
-
 import NoCarsFound from '../ui/NoCarsFound';
+import { useScrollToTop } from '../../hooks/useScrollToTop';
+import { useInfiniteScroll } from '../../hooks/useInfiniteScroll';
 
 function CarsGrid() {
   const dispatch = useDispatch();
@@ -19,30 +20,19 @@ function CarsGrid() {
   const sortedCars = useMemo(() => sortCars(cars, sort), [cars, sort]);
   const hasMore = cars.length < Math.min(totalCars, MAX_CAR_FETCH_LIMIT);
 
-  const observerRef = useRef(null);
-  const sentinelRef = useRef(null);
+  // Scroll to the top of the window when filters or sort change
+  useScrollToTop([filters, sort]);
 
-  useEffect(() => {
-    if (observerRef.current) {
-      observerRef.current.disconnect();
-    }
-
-    observerRef.current = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting && hasMore && !loading && nextPageUrl != null) {
+  // Infinite Scroll Observer using custom hook withLatestRef pattern
+  const sentinelRef = useInfiniteScroll({
+    callback: () => {
+      if (nextPageUrl != null) {
         dispatch(fetchCarsAsyncAction(filters, true, nextPageUrl));
       }
-    });
-
-    if (sentinelRef.current) {
-      observerRef.current.observe(sentinelRef.current);
-    }
-
-    return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-      }
-    };
-  }, [hasMore, loading, nextPageUrl, filters, dispatch]);
+    },
+    hasMore,
+    loading,
+  });
 
   if (loading && sortedCars.length === 0) {
     return <div className="cars-grid__empty">Loading cars...</div>;

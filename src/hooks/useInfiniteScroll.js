@@ -1,8 +1,9 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 
 /**
- * Custom hook for infinite scrolling using IntersectionObserver.
- * Keeps all arguments in a mutable ref so the observer is initialized only once.
+ * Custom hook for infinite scrolling using IntersectionObserver callback ref.
+ * This guarantees the observer attaches/cleans up correctly even if the sentinel
+ * element is conditionally rendered.
  * 
  * @param {Object} params
  * @param {Function} params.callback - Function to call when sentinel is intersected
@@ -10,8 +11,6 @@ import { useEffect, useRef } from 'react';
  * @param {boolean} params.loading - Current loading state
  */
 export function useInfiniteScroll({ callback, hasMore, loading }) {
-  const sentinelRef = useRef(null);
-  
   // Store all shifting state/callbacks in a mutable ref
   const stateRef = useRef({ callback, hasMore, loading });
 
@@ -20,28 +19,29 @@ export function useInfiniteScroll({ callback, hasMore, loading }) {
     stateRef.current = { callback, hasMore, loading };
   });
 
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      // Retrieve the absolute latest values from the ref at trigger time
-      const { callback: currentCallback, hasMore: currentHasMore, loading: currentLoading } = stateRef.current;
-      
-      if (entries[0].isIntersecting && currentHasMore && !currentLoading) {
-        currentCallback();
-      }
-    });
+  const observerRef = useRef(null);
 
-    const currentSentinel = sentinelRef.current;
-    if (currentSentinel) {
-      observer.observe(currentSentinel);
+  // A callback ref will be called with the DOM node on mount/update,
+  // and with null on unmount.
+  const sentinelRef = useCallback((node) => {
+    // Clean up previous observer if it exists
+    if (observerRef.current) {
+      observerRef.current.disconnect();
+      observerRef.current = null;
     }
 
-    return () => {
-      if (currentSentinel) {
-        observer.unobserve(currentSentinel);
-      }
-      observer.disconnect();
-    };
-  }, []); // Safe empty dependency array: Observer is created once on mount!
+    if (node) {
+      observerRef.current = new IntersectionObserver((entries) => {
+        // Retrieve the absolute latest values from the ref at trigger time
+        const { callback: currentCallback, hasMore: currentHasMore, loading: currentLoading } = stateRef.current;
+        
+        if (entries[0].isIntersecting && currentHasMore && !currentLoading) {
+          currentCallback();
+        }
+      });
+      observerRef.current.observe(node);
+    }
+  }, []);
 
   return sentinelRef;
 }

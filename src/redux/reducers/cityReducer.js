@@ -31,7 +31,7 @@ export const cityReducer = (state = initialState, action) => {
         ...state,
         data: action.payload,
         byId: action.payload.reduce((acc,cur)=>{
-          acc[cur.CityId] = cur;
+          acc[cur.cityId] = cur;
           return acc;
         },{}),
         loading: false,

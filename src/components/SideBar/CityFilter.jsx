@@ -10,15 +10,15 @@ export function CityFilter() {
   const selectedCityId = useSelector((state) => state.listing.filters.cityId);
 
   const popularCities = useMemo(() => {
-    return [...cities].filter((city) => city.IsPopular);
+    return [...cities].filter((city) => city.isPopular);
   }, [cities]);
 
   const selectedCity = useMemo(() => {
-    return cities.find((city) => city?.CityId === selectedCityId) || null;
+    return cities.find((city) => city?.cityId === selectedCityId) || null;
   }, [cities, selectedCityId]);
 
   const handleSelectCity = (city) => {
-    dispatch(setCity(city ? city.CityId : null));
+    dispatch(setCity(city ? city.cityId : null));
   };
 
   return (
@@ -28,15 +28,15 @@ export function CityFilter() {
           options={cities}
           value={selectedCity}
           onChange={(event, newValue) => handleSelectCity(newValue)}
-          getOptionLabel={(city) => city?.CityName || ""}
-          getSearchFields={(city) => [city.CityName, city.StateName, city.CityMaskingName]}
+          getOptionLabel={(city) => city?.cityName || ""}
+          getSearchFields={(city) => [city.cityName, city.stateName, city.cityMaskingName]}
           placeholder="Search city"
           renderOption={(props, option) => {
             const { key, ...liProps } = props;
             return (
-              <li key={option.CityId} {...liProps} className="autocomplete-item">
-                <span className="autocomplete-item-name">{option.CityName}</span>
-                <span className="autocomplete-item-sub">{option.StateName}</span>
+              <li key={option.cityId} {...liProps} className="autocomplete-item">
+                <span className="autocomplete-item-name">{option.cityName}</span>
+                <span className="autocomplete-item-sub">{option.stateName}</span>
               </li>
             );
           }}
@@ -44,17 +44,17 @@ export function CityFilter() {
 
         {selectedCity && (
           <div className="selected-city-label">
-            Selected: <strong>{selectedCity.CityName}</strong>
+            Selected: <strong>{selectedCity.cityName}</strong>
           </div>
         )}
 
         <div className="city-pills-container">
           {popularCities.map((city) => {
-            const isActive = selectedCityId === city.CityId;
+            const isActive = selectedCityId === city.cityId;
 
             return (
               <CityPill
-                key={city.CityId}
+                key={city.cityId}
                 city={city}
                 isActive={isActive}
                 onSelect={handleSelectCity}
@@ -74,7 +74,7 @@ function CityPill({ city, isActive, onSelect }) {
       onClick={() => onSelect(isActive ? null : city)}
       className={`city-pill-btn ${isActive ? 'city-pill-btn--active' : ''}`}
     >
-      {city.CityName}
+      {city.cityName}
     </button>
   );
 }

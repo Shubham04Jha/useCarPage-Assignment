@@ -10,7 +10,7 @@ export const useUsedCarsPage = () => {
   const cityName = useSelector((state) => {
     const cityId = state.listing.filters.cityId;
     const cityObj = state.cities.byId[cityId];
-    return cityObj ? cityObj.CityName : null;
+    return cityObj ? cityObj.cityName : null;
   });
 
   useEffect(() => {

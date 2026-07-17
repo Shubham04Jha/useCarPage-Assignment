@@ -57,7 +57,7 @@ function AppliedFilters() {
     const city = citiesById[cityId];
     filterPills.push({
       key: `city-${cityId}`,
-      label: city?.CityName ?? 'City',
+      label: city?.cityName ?? 'City',
       onRemove: () => dispatch(setCity(null)),
     });
   }

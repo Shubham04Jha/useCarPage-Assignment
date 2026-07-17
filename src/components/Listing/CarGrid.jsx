@@ -28,7 +28,7 @@ function CarsGrid() {
     }
 
     observerRef.current = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting && hasMore && !loading && nextPageUrl) {
+      if (entries[0].isIntersecting && hasMore && !loading && nextPageUrl != null) {
         dispatch(fetchCarsAsyncAction(filters, true, nextPageUrl));
       }
     });

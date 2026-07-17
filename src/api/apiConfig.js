@@ -1,5 +1,7 @@
+const BASE_URL = 'https://localhost:7006';
+
 export const apiEndpoints = {
-  cities: 'api/cities',
-  makes: 'api/v2/makes/?type=new',
-  stocks: '/api/stocks',
+  cities: `${BASE_URL}/api/cities`,
+  makes: `${BASE_URL}/api/makes`,
+  stocks: `${BASE_URL}/api/stocks`,
 }

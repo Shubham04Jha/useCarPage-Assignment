@@ -29,7 +29,7 @@
   flex: 1;
   position: sticky;
   top: 1.5rem;
-  max-height: calc(100vh - 3rem);
+  max-height: calc(100vh - 7rem);
   overflow-y: auto;
 
   background-color: var(--bg-card);
@@ -649,7 +649,7 @@
   transition: background-color 0.2s, border-color 0.2s;
 }
 
-.modal-checkbox-input:checked ~ .modal-checkbox-custom {
+.modal-checkbox-input:checked~.modal-checkbox-custom {
   background-color: var(--whatsapp-green);
   border-color: var(--whatsapp-green);
 }
@@ -660,7 +660,7 @@
   display: none;
 }
 
-.modal-checkbox-input:checked ~ .modal-checkbox-custom:after {
+.modal-checkbox-input:checked~.modal-checkbox-custom:after {
   display: block;
 }
 
@@ -716,6 +716,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -726,6 +727,7 @@
     opacity: 0;
     transform: translateY(12px) scale(0.98);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);

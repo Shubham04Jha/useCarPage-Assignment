@@ -96,25 +96,24 @@ export const getStateFromUrl = () => {
   };
 };
 
+// Convert state to query parameters search string
+export const getSearchStringFromState = (state) => {
+  try {
+    const { filters, sort } = state;
+    const filterParamString = buildCarsQuery(filters);
+    const sortParamString = (sort && sort.by && sort.order) ? `${QUERY_KEY_SORT}=${sort.by}-${sort.order}` : '';
+    const newSearch = [filterParamString, sortParamString].filter(Boolean).join("&");
+    return newSearch ? `?${newSearch}` : '';
+  } catch {
+    return '';
+  }
+};
+
 // state => url params
 export const syncStateToUrl = (state) => {
   try {
-    const params = new URLSearchParams(window.location.search);
-
-    // Clear old filter-related keys
-    const keysToRemove = [QUERY_KEY_FUEL, QUERY_KEY_CAR, QUERY_KEY_CITY, QUERY_KEY_BUDGET, QUERY_KEY_SORT];
-    keysToRemove.forEach(k => params.delete(k));
-
-    const { filters, sort } = state;
-
-    const filterParamString = buildCarsQuery(filters);
-
-    const sortParamString = (sort && sort.by && sort.order) ? `${QUERY_KEY_SORT}=${sort.by}-${sort.order}` : '';
-
-    const newSearch = [filterParamString, sortParamString].filter(Boolean).join("&");
-
-    const newUrl = `${window.location.pathname}${newSearch ? ('?' + newSearch) : ""}`;
-
+    const newSearch = getSearchStringFromState(state);
+    const newUrl = `${window.location.pathname}${newSearch}`;
     window.history.replaceState(null, "", newUrl);
   } catch {
     console.log('url serilization failed. Using default states')

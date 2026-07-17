@@ -1,7 +1,11 @@
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+import { store } from '../redux';
+import { getSearchStringFromState } from '../utils/persistence';
 
 function RootRedirect() {
-  const { search } = useLocation();
+  // Read current filters/sort directly from the Redux store
+  const state = store.getState().listing;
+  const search = getSearchStringFromState(state);
 
   return <Navigate to={`/used-cars${search}`} replace />;
 }

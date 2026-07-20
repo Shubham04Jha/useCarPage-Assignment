@@ -47,9 +47,9 @@ describe('buildCarsQuery', () => {
       fuelIds: [],
       makeIds: [],
       cityId: null,
-      budget: { min: 100000, max: 500000 },
+      budget: { min: 1, max: 5 },
     };
-    expect(buildCarsQuery(filters)).toBe('budget=100000-500000');
+    expect(buildCarsQuery(filters)).toBe('budget=1-5');
   });
 
   it('should format budget query parameter when only min is provided', () => {
@@ -57,9 +57,9 @@ describe('buildCarsQuery', () => {
       fuelIds: [],
       makeIds: [],
       cityId: null,
-      budget: { min: 100000, max: null },
+      budget: { min: 2, max: null },
     };
-    expect(buildCarsQuery(filters)).toBe('budget=100000-');
+    expect(buildCarsQuery(filters)).toBe('budget=2-');
   });
 
   it('should combine multiple parameters correctly with &', () => {
@@ -67,8 +67,40 @@ describe('buildCarsQuery', () => {
       fuelIds: [1],
       makeIds: [10],
       cityId: 3,
-      budget: { min: 100000, max: 500000 },
+      budget: { min: 1, max: 5 },
     };
-    expect(buildCarsQuery(filters)).toBe('fuel=1&car=10&city=3&budget=100000-500000');
+    expect(buildCarsQuery(filters)).toBe('fuel=1&car=10&city=3&budget=1-5');
+  });
+
+  it('should format sc and so query parameters when sort is provided', () => {
+    const filters = {
+      fuelIds: [],
+      makeIds: [],
+      cityId: null,
+      budget: null,
+    };
+    const sort = { sc: 1, so: 1 };
+    expect(buildCarsQuery(filters, sort)).toBe('sc=1&so=1');
+  });
+
+  it('should combine filter parameters and sort sc and so parameters correctly', () => {
+    const filters = {
+      fuelIds: [1],
+      makeIds: [10],
+      cityId: 3,
+      budget: { min: 1, max: 5 },
+    };
+    const sort = { sc: 3, so: 0 };
+    expect(buildCarsQuery(filters, sort)).toBe('fuel=1&car=10&city=3&budget=1-5&sc=3&so=0');
+  });
+
+  it('should omit sc and so parameters when sort is null (Best Match)', () => {
+    const filters = {
+      fuelIds: [1],
+      makeIds: [],
+      cityId: null,
+      budget: null,
+    };
+    expect(buildCarsQuery(filters, null)).toBe('fuel=1');
   });
 });

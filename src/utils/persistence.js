@@ -6,9 +6,11 @@ import {
   QUERY_KEY_CAR,
   QUERY_KEY_CITY,
   QUERY_KEY_BUDGET,
-  QUERY_KEY_SORT,
-  SORT_BY_PRICE,
-  SORT_BY_YEAR,
+  QUERY_KEY_SORT_COLUMN,
+  QUERY_KEY_SORT_ORDER,
+  SORT_COLUMN_PRICE,
+  SORT_COLUMN_KM,
+  SORT_COLUMN_YEAR,
   SORT_ORDER_ASC,
   SORT_ORDER_DESC
 } from "../constants/filterKeys";
@@ -64,13 +66,19 @@ export const getStateFromUrl = () => {
     }
   }
 
-  // Parse sort (format: by-order)
+  // Parse sort (sc and so parameters)
   let sort = null;
-  const sortParam = params.get(QUERY_KEY_SORT);
-  if (sortParam) {
-    const [by, order] = sortParam.split("-");
-    if (by && order && (by === SORT_BY_PRICE || by === SORT_BY_YEAR) && (order === SORT_ORDER_ASC || order === SORT_ORDER_DESC)) {
-      sort = { by, order };
+  const scParam = params.get(QUERY_KEY_SORT_COLUMN);
+  const soParam = params.get(QUERY_KEY_SORT_ORDER);
+  if (scParam !== null && soParam !== null) {
+    const sc = Number(scParam);
+    const so = Number(soParam);
+    if (
+      !isNaN(sc) && !isNaN(so) &&
+      [SORT_COLUMN_PRICE, SORT_COLUMN_KM, SORT_COLUMN_YEAR].includes(sc) &&
+      [SORT_ORDER_DESC, SORT_ORDER_ASC].includes(so)
+    ) {
+      sort = { sc, so };
     }
   }
 
@@ -100,10 +108,8 @@ export const getStateFromUrl = () => {
 export const getSearchStringFromState = (state) => {
   try {
     const { filters, sort } = state;
-    const filterParamString = buildCarsQuery(filters);
-    const sortParamString = (sort && sort.by && sort.order) ? `${QUERY_KEY_SORT}=${sort.by}-${sort.order}` : '';
-    const newSearch = [filterParamString, sortParamString].filter(Boolean).join("&");
-    return newSearch ? `?${newSearch}` : '';
+    const queryString = buildCarsQuery(filters, sort);
+    return queryString ? `?${queryString}` : '';
   } catch {
     return '';
   }

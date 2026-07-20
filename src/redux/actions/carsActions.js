@@ -26,12 +26,14 @@ const fetchCarsSuccess = (carsData, isPageLoad = false)=>{
   }
 };
 
-export const fetchCarsAsyncAction = (filters, isPageLoad = false, nextPageUrl = null)=>{
-  return async (dispatch, getState)=>{
+export const fetchCarsAsyncAction = (isPageLoad = false) => {
+  return async (dispatch, getState) => {
     dispatch(fetchCarsRequest());
     try {
-      const data = await getCars(filters, nextPageUrl);
-      const sort = getState().listing?.sort;
+      const state = getState();
+      const { filters, sort } = state.listing;
+      const nextPageUrl = isPageLoad ? (state.cars?.data?.nextPageUrl ?? null) : null;
+      const data = await getCars(filters, nextPageUrl, sort);
       if (data && data.stocks && sort) {
         data.stocks = sortCars(data.stocks, sort);
       }
@@ -39,5 +41,5 @@ export const fetchCarsAsyncAction = (filters, isPageLoad = false, nextPageUrl = 
     } catch (err) {
       dispatch(fetchCarsFailure(err.message || "Failed to fetch cars"));
     }
-  }
-}
+  };
+};

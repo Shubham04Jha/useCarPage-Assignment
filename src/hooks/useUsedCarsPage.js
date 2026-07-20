@@ -4,6 +4,7 @@ import { fetchCities, fetchMakes, fetchCarsAsyncAction } from '../redux';
 
 export const useUsedCarsPage = () => {
   const filters = useSelector((state) => state.listing.filters);
+  const sort = useSelector((state) => state.listing.sort);
   const dispatch = useDispatch();
 
   const totalCars = useSelector((state) => state.cars.data.totalCount ?? 0);
@@ -14,8 +15,8 @@ export const useUsedCarsPage = () => {
   });
 
   useEffect(() => {
-    dispatch(fetchCarsAsyncAction(filters, false, null));
-  }, [filters, dispatch]);
+    dispatch(fetchCarsAsyncAction());
+  }, [filters, sort, dispatch]);
 
   useEffect(() => {
     dispatch(fetchCities());

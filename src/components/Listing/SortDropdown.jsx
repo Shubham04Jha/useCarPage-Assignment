@@ -1,8 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { setSort } from '../../redux/actions/listingActions';
 import {
-  SORT_BY_PRICE,
-  SORT_BY_YEAR,
+  SORT_COLUMN_PRICE,
+  SORT_COLUMN_KM,
+  SORT_COLUMN_YEAR,
   SORT_ORDER_ASC,
   SORT_ORDER_DESC
 } from '../../constants/filterKeys';
@@ -12,20 +13,22 @@ function parseSortValue(value) {
     return null;
   }
 
-  const [by, order] = value.split('-');
-  if (!by || !order) {
+  const [scStr, soStr] = value.split('-');
+  const sc = Number(scStr);
+  const so = Number(soStr);
+  if (isNaN(sc) || isNaN(so)) {
     return null;
   }
 
-  return { by, order };
+  return { sc, so };
 }
 
 function getSortValue(sort) {
-  if (!sort || !sort.by || !sort.order) {
+  if (!sort || sort.sc == null || sort.so == null) {
     return '';
   }
 
-  return `${sort.by}-${sort.order}`;
+  return `${sort.sc}-${sort.so}`;
 }
 
 function SortDropdown() {
@@ -41,10 +44,12 @@ function SortDropdown() {
     <div className="sort-dropdown-container">
       <select value={getSortValue(sort)} onChange={handleChange} className="sort-dropdown-select">
         <option value="">Best Match</option>
-        <option value={`${SORT_BY_PRICE}-${SORT_ORDER_ASC}`}>Price - Low to High</option>
-        <option value={`${SORT_BY_PRICE}-${SORT_ORDER_DESC}`}>Price - High to Low</option>
-        <option value={`${SORT_BY_YEAR}-${SORT_ORDER_ASC}`}>Year - Old to New</option>
-        <option value={`${SORT_BY_YEAR}-${SORT_ORDER_DESC}`}>Year - New to Old</option>
+        <option value={`${SORT_COLUMN_PRICE}-${SORT_ORDER_ASC}`}>Price - Low to High</option>
+        <option value={`${SORT_COLUMN_PRICE}-${SORT_ORDER_DESC}`}>Price - High to Low</option>
+        <option value={`${SORT_COLUMN_KM}-${SORT_ORDER_ASC}`}>Kms Driven - Low to High</option>
+        <option value={`${SORT_COLUMN_KM}-${SORT_ORDER_DESC}`}>Kms Driven - High to Low</option>
+        <option value={`${SORT_COLUMN_YEAR}-${SORT_ORDER_ASC}`}>Year - Old to New</option>
+        <option value={`${SORT_COLUMN_YEAR}-${SORT_ORDER_DESC}`}>Year - New to Old</option>
       </select>
     </div>
   );

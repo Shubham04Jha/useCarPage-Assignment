@@ -5,7 +5,7 @@ import { useEffect } from 'react';
  * @param {Array} dependencies - Array of dependencies to watch
  * @param {ScrollBehavior} [behavior='smooth'] - Scroll transition behavior
  */
-export function useScrollToTop(dependencies, behavior = 'smooth') {
+export function useScrollToTop(dependencies, behavior = 'instant') {
   useEffect(() => {
     window.scrollTo({
       top: 0,

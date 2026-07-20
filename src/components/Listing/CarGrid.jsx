@@ -27,7 +27,7 @@ function CarsGrid() {
   const sentinelRef = useInfiniteScroll({
     callback: () => {
       if (nextPageUrl != null) {
-        dispatch(fetchCarsAsyncAction(filters, true, nextPageUrl));
+        dispatch(fetchCarsAsyncAction(true));
       }
     },
     hasMore,

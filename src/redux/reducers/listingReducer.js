@@ -15,21 +15,17 @@ import {
 } from '../types/listingType';
 
 const initialState = {
-    filters: {
-        fuelIds: [],
-        makeIds: [],
-        cityId: null,
-        budget: null, 
-    },
-    sort: null,
-    // sort: {
-    //     by: null, // 'price'  | 'makeYear'
-    //     order: null, // 'asc' | 'desc'
-    // },
+  filters: {
+    fuelIds: [],
+    makeIds: [],
+    cityId: null,
+    budget: null,
+  },
+  sort: null,
 };
 
-export const listingReducer = (state = initialState, action)=>{
-  switch(action.type){
+export const listingReducer = (state = initialState, action) => {
+  switch (action.type) {
     case ADD_FUEL:
       if (state.filters.fuelIds.includes(action.payload)) {
         return state;

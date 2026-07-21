@@ -7,6 +7,8 @@ import {
   setCity,
   clearFilters,
 } from '../../redux/actions/listingActions';
+import { useCitiesQuery } from '../../hooks/useCitiesQuery';
+import { useMakesQuery } from '../../hooks/useMakesQuery';
 
 function getFuelName(fuelId) {
   const fuel = FUEL_BY_ID[fuelId];
@@ -31,8 +33,8 @@ function AppliedFilters() {
   const { fuelIds, makeIds, cityId, budget } = useSelector(
     (state) => state.listing.filters
   );
-  const makesById = useSelector((state) => state.makes.byId);
-  const citiesById = useSelector((state) => state.cities.byId);
+  const { makesById } = useMakesQuery();
+  const { citiesById } = useCitiesQuery();
 
   const filterPills = [];
 

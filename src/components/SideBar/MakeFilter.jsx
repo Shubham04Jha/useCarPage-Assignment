@@ -4,6 +4,7 @@ import { CollapsibleHeader } from "../ui/CollapsibleHeader";
 import { POPULAR_PRIORITY_THRESHOLD } from "../../constants/make";
 import { addMake, removeMake } from "../../redux/actions/listingActions";
 import { SearchAutocomplete } from "../ui/SearchAutocomplete";
+import { useMakesQuery } from "../../hooks/useMakesQuery";
 
 function MakeCheckboxItem({ make, checked, onChange }) {
   return (
@@ -24,7 +25,7 @@ function MakeCheckboxItem({ make, checked, onChange }) {
 export function MakeFilter() {
   const [showAllBrands, setShowAllBrands] = useState(false);
   const dispatch = useDispatch();
-  const makes = useSelector((state) => state.makes.data);
+  const { makes } = useMakesQuery();
   const makeIds = useSelector((state) => state.listing.filters.makeIds);
 
   const popularMakes = makes.filter(

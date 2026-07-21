@@ -1,6 +1,5 @@
-import { applyMiddleware, createStore } from "redux";
+import { createStore } from "redux";
 import { rootReducer } from "./reducers/rootReducer";
-import { thunk } from "redux-thunk";
 import { loadState, saveState, syncStateToUrl } from "../utils/persistence";
 
 const preloadedState = {
@@ -9,8 +8,7 @@ const preloadedState = {
 
 export const store = createStore(
   rootReducer,
-  preloadedState,
-  applyMiddleware(thunk)
+  preloadedState
 );
 
 // Sync initial state on load

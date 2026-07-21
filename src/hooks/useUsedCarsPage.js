@@ -1,23 +1,15 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchCities, fetchMakes } from '../redux';
+import { useSelector } from 'react-redux';
 import { useCarsQuery } from './useCarsQuery';
+import { useCitiesQuery } from './useCitiesQuery';
 
 export const useUsedCarsPage = () => {
-  const dispatch = useDispatch();
   const { data } = useCarsQuery();
+  const { citiesById } = useCitiesQuery();
 
   const totalCars = data?.pages[0]?.totalCount ?? 0;
-  const cityName = useSelector((state) => {
-    const cityId = state.listing.filters.cityId;
-    const cityObj = state.cities.byId[cityId];
-    return cityObj ? cityObj.cityName : null;
-  });
-
-  useEffect(() => {
-    dispatch(fetchCities());
-    dispatch(fetchMakes());
-  }, [dispatch]);
+  const cityId = useSelector((state) => state.listing.filters.cityId);
+  const cityObj = cityId ? citiesById[cityId] : null;
+  const cityName = cityObj ? cityObj.cityName : null;
 
   return {
     cityName,

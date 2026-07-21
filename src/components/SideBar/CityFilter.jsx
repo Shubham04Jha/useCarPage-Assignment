@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCity } from "../../redux";
 import { CollapsibleHeader } from "../ui/CollapsibleHeader";
 import { SearchAutocomplete } from "../ui/SearchAutocomplete";
+import { useCitiesQuery } from "../../hooks/useCitiesQuery";
 
 export function CityFilter() {
   const dispatch = useDispatch();
-  const cities = useSelector((state) => state.cities?.data || []);
+  const { cities } = useCitiesQuery();
   const selectedCityId = useSelector((state) => state.listing.filters.cityId);
 
   const popularCities = useMemo(() => {

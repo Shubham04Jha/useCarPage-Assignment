@@ -1,6 +1,7 @@
 import ImageCarousel from '../ui/ImageCarousel';
 import { useModalContext } from '../../hooks/useModalContext';
 import { useSelector } from 'react-redux';
+import { memo } from 'react';
 
 function CarCard({ car }) {
   const { imageUrls, carName, formattedKmDriven, fuelType, cityName, formattedPrice, areaName, registrationYear: makeYear, additionalFuel, deliveryCityName } = car;
@@ -26,4 +27,4 @@ function CarCard({ car }) {
   );
 }
 
-export default CarCard;
+export default memo(CarCard);

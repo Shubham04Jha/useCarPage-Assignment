@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CollapsibleHeader } from "../ui/CollapsibleHeader";
 import { POPULAR_PRIORITY_THRESHOLD } from "../../constants/make";
@@ -28,10 +28,15 @@ export function MakeFilter() {
   const { makes } = useMakesQuery();
   const makeIds = useSelector((state) => state.listing.filters.makeIds);
 
-  const popularMakes = makes.filter(
-    (make) => make.priorityOrder > POPULAR_PRIORITY_THRESHOLD
+  const popularMakes = useMemo(
+    () => makes.filter(make => make.priorityOrder > POPULAR_PRIORITY_THRESHOLD),
+    [makes]
   );
-  const allMakes = [...makes].sort((left, right) => left.makeName.localeCompare(right.makeName));
+
+  const allMakes = useMemo(
+    () => [...makes].sort((a, b) => a.makeName.localeCompare(b.makeName)),
+    [makes]
+  );
 
   const handleMakeChange = (makeId, checked) => {
     if (checked) {

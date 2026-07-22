@@ -1,8 +1,7 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, keepPreviousData } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { getCars } from '../api/carsApi';
-import { sortCars } from '../utils/sortCars';
 
 export const useCarsQuery = () => {
   const filters = useSelector((state) => state.listing.filters);
@@ -19,12 +18,10 @@ export const useCarsQuery = () => {
     queryKey: ['cars', normalizedFilters, sort],
     queryFn: async ({ pageParam = null, signal }) => {
       const data = await getCars(normalizedFilters, pageParam, sort, { signal });
-      if (data && data.stocks && sort) {
-        data.stocks = sortCars(data.stocks, sort);
-      }
       return data;
     },
     initialPageParam: null,
     getNextPageParam: (lastPage) => lastPage?.nextPageUrl ?? undefined,
+    placeholderData: keepPreviousData,
   });
 };

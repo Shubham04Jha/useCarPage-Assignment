@@ -6,18 +6,35 @@ import ListingSection from '../components/Listing/ListingSection';
 import { ModalProvider } from '../context/ModalContext';
 import DetailsModal from '../components/ui/DetailsModal';
 import { useUsedCarsPage } from '../hooks/useUsedCarsPage';
+import { useCarsQuery } from '../hooks/useCarsQuery';
+import LoadingOverlay from '../components/ui/LoadingOverlay';
 
-function UsedCarsPage() {
+function PageHeader() {
   const pageData = useUsedCarsPage();
   return (
+    <h1 className="page-title">
+      {pageData.totalCars} <span className="page-title__sub">Used Cars in {pageData.cityName || 'India'}</span>
+    </h1>
+  );
+}
+
+function FilterLoadingOverlay() {
+  const { isFetching, isPlaceholderData } = useCarsQuery();
+  const showOverlayLoader = isFetching && isPlaceholderData;
+
+  if (!showOverlayLoader) return null;
+  return <LoadingOverlay />;
+}
+
+function UsedCarsPage() {
+  return (
     <Layout>
-      <h1 className="page-title">
-        {pageData.totalCars} <span className="page-title__sub">Used Cars in {pageData.cityName || 'India'}</span>
-      </h1>
+      <PageHeader />
       <div className='used-cars-page-inner-layout'>
         <SideBar />
         <ListingSection />
       </div>
+      <FilterLoadingOverlay />
     </Layout>
   );
 }

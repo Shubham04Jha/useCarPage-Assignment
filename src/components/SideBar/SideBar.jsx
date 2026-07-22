@@ -5,29 +5,37 @@ import { FuelFilter } from "./FuelFilter"
 import { MakeFilter } from "./MakeFilter"
 import { clearFilters } from "../../redux/actions/listingActions"
 
-function SideBar() {
+function ClearAllFiltersButton() {
   const dispatch = useDispatch();
   const filters = useSelector((state) => state.listing.filters || {});
-  
+
   const hasActiveFilters = 
     (filters.fuelIds && filters.fuelIds.length > 0) ||
     (filters.makeIds && filters.makeIds.length > 0) ||
     filters.cityId !== null ||
     filters.budget !== null;
 
+  if (!hasActiveFilters) {
+    return null;
+  }
+
+  return (
+    <button
+      type="button"
+      className="sidebar-header__clear-btn"
+      onClick={() => dispatch(clearFilters())}
+    >
+      Clear all
+    </button>
+  );
+}
+
+function SideBar() {
   return (
     <aside className="sidebar">
       <div className="sidebar-header">
         <h2 className="sidebar-header__title">Filters</h2>
-        {hasActiveFilters && (
-          <button
-            type="button"
-            className="sidebar-header__clear-btn"
-            onClick={() => dispatch(clearFilters())}
-          >
-            Clear all
-          </button>
-        )}
+        <ClearAllFiltersButton />
       </div>
 
       <BudgetFilter />
@@ -35,7 +43,7 @@ function SideBar() {
       <MakeFilter />
       <CityFilter /> 
     </aside>
-  )
+  );
 }
 
 export default SideBar

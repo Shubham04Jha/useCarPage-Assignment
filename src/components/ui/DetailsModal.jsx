@@ -1,4 +1,4 @@
-import ReactDOM from 'react-dom';
+import { createPortal } from 'react-dom';
 import { useModalContext } from '../../hooks/useModalContext';
 import { useEffect } from 'react';
 
@@ -17,7 +17,7 @@ function DetailsModal() {
 
   if (!isOpen) return null;
 
-  return ReactDOM.createPortal(
+  return createPortal(
     <div className="modal-overlay" onClick={closeModal} role="dialog" aria-modal="true">
       <div className="modal-card" onClick={(e) => e.stopPropagation()}>
         {/* Close Button */}
